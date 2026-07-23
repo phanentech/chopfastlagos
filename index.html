@@ -929,7 +929,7 @@
     // ==================== HELPERS ====================
 
 
-    const serverCall = (functionName, ...args) => {
+ const serverCall = (functionName, ...args) => {
   if (typeof google !== 'undefined' && google.script && google.script.run) {
     return new Promise((resolve, reject) => {
       google.script.run
@@ -939,27 +939,26 @@
     });
   }
 
-  const url = (typeof BACKEND_URL !== 'undefined' && BACKEND_URL)
+  const base = (typeof BACKEND_URL !== 'undefined' && BACKEND_URL)
     ? BACKEND_URL
     : window.location.href.split('?')[0];
 
-  return fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ fn: functionName, args })
-  })
+  // GET (not POST) — Apps Script only adds the CORS header reliably on GET.
+  const payload = encodeURIComponent(JSON.stringify({ fn: functionName, args }));
+  const url = base + '?payload=' + payload;
+
+  return fetch(url, { method: 'GET' })
     .then((res) => {
       if (!res.ok) throw new Error('Server responded with ' + res.status);
       return res.json();
     })
-    .then((payload) => {
-      if (payload && typeof payload === 'object' && payload.__error) {
-        throw new Error(payload.__error);
+    .then((data) => {
+      if (data && typeof data === 'object' && data.__error) {
+        throw new Error(data.__error);
       }
-      return payload;
+      return data;
     });
 };
-
     const escapeHtml = (str) => {
       if (!str) return '';
       return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
