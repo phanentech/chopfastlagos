@@ -267,14 +267,44 @@
 
     /* Category Badges */
     .category-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-    .cat-snack { background: #fff3e0; color: #e65100; }
-    .cat-roti { background: #efebe9; color: #4e342e; }
-    .cat-rice { background: #e8f5e9; color: #2e7d32; }
-    .cat-curry { background: #fce4ec; color: #c62828; }
-    .cat-devilled { background: #ffebee; color: #b71c1c; }
-    .cat-kottu { background: #f3e5f5; color: #6a1b9a; }
-    .cat-hoppers { background: #e0f2f1; color: #00695c; }
-    .cat-dessert { background: #fce4ec; color: #ad1457; }
+    .cat-soft-drink { background: #fff3e0; color: #e65100; }
+    .cat-gin-and-vodka { background: #efebe9; color: #4e342e; }
+    .cat-swallow { background: #e8f5e9; color: #2e7d32; }
+    .cat-breakfast { background: #fce4ec; color: #c62828; }
+    .cat-protein { background: #ffebee; color: #b71c1c; }
+    .cat-classic-pepper-soup { background: #f3e5f5; color: #6a1b9a; }
+    .cat-rr-kitchen-nigerian-soup { background: #e0f2f1; color: #00695c; }
+    .cat-salad { background: #fce4ec; color: #ad1457; }
+    .cat-shots { background: #e3f2fd; color: #1565c0; }
+    .cat-sides-extras { background: #fff8e1; color: #f57f17; }
+    .cat-kebab { background: #ede7f6; color: #4527a0; }
+    .cat-main-course { background: #e1f5fe; color: #01579b; }
+    .cat-rr-kitchen-chinese-dish { background: #fff3e0; color: #e65100; }
+    .cat-rr-kitchen-continental-dish-starter { background: #efebe9; color: #4e342e; }
+    .cat-whiskey { background: #e8f5e9; color: #2e7d32; }
+    .cat-white-wine { background: #fce4ec; color: #c62828; }
+    .cat-shot-beverages { background: #ffebee; color: #b71c1c; }
+    .cat-milkshakes { background: #f3e5f5; color: #6a1b9a; }
+    .cat-tequila { background: #e0f2f1; color: #00695c; }
+    .cat-red-wine { background: #fce4ec; color: #ad1457; }
+    .cat-rose-wine { background: #e3f2fd; color: #1565c0; }
+    .cat-non-alcoholic-drink { background: #fff8e1; color: #f57f17; }
+    .cat-rr-kitchen-sandwich-and-burger { background: #ede7f6; color: #4527a0; }
+    .cat-rr-chicken-combos { background: #e1f5fe; color: #01579b; }
+    .cat-pasta { background: #fff3e0; color: #e65100; }
+    .cat-rice-dishes { background: #efebe9; color: #4e342e; }
+    .cat-special-cocktails { background: #e8f5e9; color: #2e7d32; }
+    .cat-juices-smoothies { background: #fce4ec; color: #c62828; }
+    .cat-beer { background: #ffebee; color: #b71c1c; }
+    .cat-others { background: #f3e5f5; color: #6a1b9a; }
+    .cat-dessert { background: #e0f2f1; color: #00695c; }
+    .cat-nigerian-rice-dishes { background: #fce4ec; color: #ad1457; }
+    .cat-platter { background: #e3f2fd; color: #1565c0; }
+    .cat-rr-grilled-section { background: #fff8e1; color: #f57f17; }
+    .cat-light-meals { background: #ede7f6; color: #4527a0; }
+    .cat-classic-cocktails { background: #e1f5fe; color: #01579b; }
+    .cat-cognac { background: #fff3e0; color: #e65100; }
+    .cat-champagne { background: #efebe9; color: #4e342e; }
 
     /* Availability Badges */
     .avail-badge { display: inline-block; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
@@ -1019,7 +1049,14 @@
       if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
       return Math.floor(seconds / 86400) + 'd ago';
     };
-
+    const slugifyCategory = (cat) => {
+      if (!cat) return '';
+      return String(cat)
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    };
     // ==================== DARK MODE ====================
     function useDarkMode() {
       const [theme, setTheme] = useState(() => {
@@ -3393,7 +3430,7 @@
                 { data: 'item_id', title: 'ID' },
                 { data: 'image_url', title: 'Image', orderable: false, render: (d) => d ? '<img src="' + escapeHtml(d) + '" style="width:50px;height:50px;object-fit:cover;border-radius:4px;" />' : '<div style="width:50px;height:50px;background:#f0f0f0;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#ccc;"><i class="fas fa-image"></i></div>' },
                 { data: 'name', title: 'Name' },
-                { data: 'category', title: 'Category', render: (d) => '<span class="category-badge cat-' + d.toLowerCase() + '">' + d + '</span>' },
+                { data: 'category', title: 'Category', render: (d) => '<span class="category-badge cat-' + slugifyCategory(d) + '">' + escapeHtml(d) + '</span>' },
                 { data: 'price', title: 'Price', render: (d) => '<strong>' + formatPrice(d) + '</strong>' },
                 { data: 'availability', title: 'Availability', render: (d) => '<span class="avail-badge avail-' + (d === 'Instant' ? 'instant' : 'preorder') + '">' + d + '</span>' },
                 { data: null, title: 'Stock', render: (d, t, row) => {
@@ -3455,7 +3492,8 @@
           html: '<div class="swal-form"><div class="swal-form-grid">' +
             '<div class="form-group"><label>Item ID *</label><input type="text" id="swal-itemid" placeholder="e.g. SN03"></div>' +
             '<div class="form-group"><label>Name *</label><input type="text" id="swal-name" placeholder="Item name"></div>' +
-            '<div class="form-group"><label>Category *</label><select id="swal-category"><option value="">Select</option><option value="SNACK">Snack</option><option value="ROTI">Roti</option><option value="RICE">Rice</option><option value="CURRY">Curry</option><option value="DEVILLED">Devilled</option><option value="KOTTU">Kottu</option><option value="HOPPERS">Hoppers</option><option value="DESSERT">Dessert</option></select></div>' +
+            '<div class="form-group"><label>Category *</label><select id="swal-category"><option value="">Select</option>' +['SOFT DRINK','GIN & VODKA','SWALLOW','BREAKFAST','PROTEIN','CLASSIC PEPPER SOUP','RR KITCHEN NIGERIAN SOUP','SALAD','SHOTS','SIDES (EXTRAS)','KEBAB','MAIN COURSE','RR KITCHEN CHINESE DISH','RR KITCHEN CONTINENTAL DISH - STARTER','WHISKEY','WHITE WINE','SHOT BEVERAGES','MILKSHAKES','TEQUILA','RED WINE','ROSE WINE','NON-ALCOHOLIC DRINK','RR KITCHEN SANDWICH AND BURGER','RR CHICKEN COMBOS','PASTA','RICE DISHES','SPECIAL COCKTAILS','JUICES/SMOOTHIES','BEER','OTHERS','DESSERT','NIGERIAN RICE DISHES','PLATTER','RR GRILLED SECTION','LIGHT MEALS','CLASSIC COCKTAILS','COGNAC','CHAMPAGNE'].map(c => '<option value="' + c + '">' + c.charAt(0) + c.slice(1).toLowerCase() + '</option>').join('') +
+            '</select></div>' +
             '<div class="form-group"><label>Price *</label><input type="number" id="swal-price" placeholder="0" min="0" step="1"></div>' +
             '<div class="form-group"><label>Availability</label><select id="swal-avail"><option value="Instant">Instant</option><option value="Pre-Order">Pre-Order</option></select></div>' +
             '<div class="form-group"><label>Description</label><input type="text" id="swal-desc" placeholder="Short description"></div>' +
@@ -3980,7 +4018,7 @@
                     <span className={'avail-badge avail-' + (item.availability === 'Instant' ? 'instant' : 'preorder')}>{item.availability}</span>
                   </div>
                   <div style={{marginTop: '8px'}}>
-                    <span className={'category-badge cat-' + item.category.toLowerCase()}>{item.category}</span>
+                    <span className={'category-badge cat-' + slugifyCategory(item.category)}>{item.category}</span>
                   </div>
                 </div>
               </div>
