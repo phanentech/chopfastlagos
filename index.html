@@ -559,10 +559,49 @@
     .hp-section-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 20px; }
     .hp-section-head h2 { margin: 0 0 6px; font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); line-height: 1; }
     .hp-section-head p { margin: 0; color: #6f6158; }
-    .hp-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
-    .hp-filter-btn { padding: 10px 14px; border: 1px solid rgba(34,27,24,0.08); border-radius: 999px; background: rgba(255,255,255,0.66); color: #6f6158; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; font: inherit; }
+    .hp-filters-wrap { position: relative; margin-bottom: 20px; }
+    .hp-filters { display: flex; flex-wrap: nowrap; gap: 10px; margin-bottom: 0; overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+    .hp-filters::-webkit-scrollbar { display: none; }
+    .hp-filter-btn { flex-shrink: 0; white-space: nowrap; }
+    .hp-filters-fade-left, .hp-filters-fade-right {
+  position: absolute; top: 0; bottom: 0; width: 36px; pointer-events: none; z-index: 2;
+}
+    .hp-filters-fade-left { left: 0; background: linear-gradient(90deg, #fbf5eb, transparent); }
+    .hp-filters-fade-right { right: 0; background: linear-gradient(270deg, #fbf5eb, transparent); }
+    .hp-filters-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(34,27,24,0.1);
+  background: #fff; color: #221b18; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(96,52,25,0.15); transition: transform 0.2s ease;
+}
+    .hp-filters-arrow:hover { transform: translateY(-50%) scale(1.08); }
+    .hp-filters-arrow.left { left: -6px; }
+    .hp-filters-arrow.right { right: -6px; }
+    .hp-filters {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE/Edge */
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.hp-filters::-webkit-scrollbar { display: none; }  /* Chrome/Safari */
+.hp-filter-btn { flex-shrink: 0; white-space: nowrap; }
+    .hp-filter-btn { padding: 10px 14px; border: 1px solid rgba(34,27,24,0.08); border-radius: 999px; background: rgba(255,255,255,0.66); color: #6f6158; cursor: pointer; transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease; font: inherit; flex-shrink: 0; white-space: nowrap; }
     .hp-filter-btn.active { background: #221b18; color: #fff8ef; box-shadow: 0 12px 24px rgba(34,27,24,0.16); animation: hpChipGlow 0.45s ease; }
     .hp-filter-btn:hover { transform: translateY(-2px); }
+    .hp-filters-fade-left, .hp-filters-fade-right { position: absolute; top: 0; bottom: 0; width: 36px; pointer-events: none; z-index: 2; }
+    .hp-filters-fade-left { left: 0; background: linear-gradient(90deg, #fbf5eb, transparent); }
+    .hp-filters-fade-right { right: 0; background: linear-gradient(270deg, #fbf5eb, transparent); }
+    .hp-filters-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 3; width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(34,27,24,0.1); background: #fff; color: #221b18; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(96,52,25,0.15); transition: transform 0.2s ease; }
+    .hp-filters-arrow:hover { transform: translateY(-50%) scale(1.08); }
+    .hp-filters-arrow.left { left: -6px; }
+    .hp-filters-arrow.right { right: -6px; }
     .hp-menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
     .hp-menu-card { display: grid; grid-template-columns: 80px 1fr; gap: 16px; padding: 20px; border-radius: 22px; background: rgba(255,255,255,0.74); border: 1px solid rgba(34,27,24,0.08); position: relative; overflow: hidden; transform: translateY(18px); opacity: 0; animation: hpCardRise 0.55s ease forwards; transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease; }
     .hp-menu-card-img { width: 80px; height: 80px; border-radius: 16px; object-fit: cover; grid-row: 1 / -1; align-self: center; background: rgba(247,239,227,0.8); display: flex; align-items: center; justify-content: center; color: #c4b5a5; font-size: 28px; overflow: hidden; flex-shrink: 0; }
@@ -914,7 +953,7 @@
   // ─── BACKEND CONFIG ───────────────────────────────────
   // Leave this set to your Apps Script /exec URL. This is the
   // only line you touch if you ever redeploy the backend.
-  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwActm2DhQY8_cyQDpmje-mpSGFfpP2bbakD2NoaAHzN6WfQ3X9pfUGtJT705dKJMnT/exec';
+  const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzzmiHj1jqHdKqR_PmzxuuOBEIKgSFSsbpQSD-hoNvDgMF06CPHpS9DaLB4nyvltyzK/exec';
 </script>
 
   <script type="text/babel">
@@ -1123,6 +1162,10 @@
       const [extrasCache, setExtrasCache] = useState({});
       const [recentlyAdded, setRecentlyAdded] = useState('');
       const [cartPulse, setCartPulse] = useState(false);
+      const filtersRef = useRef(null);
+      const scrollFilters = (dir) => {
+    if (filtersRef.current) filtersRef.current.scrollBy({ left: dir * 240, behavior: 'smooth' });
+  };
 
       useEffect(() => {
         Promise.all([
@@ -1388,12 +1431,22 @@
                   <div className="hp-pill">{filteredMenu.length} dishes</div>
                 </div>
 
-                <div className="hp-filters">
-                  {categories.map(cat => (
-                    <button key={cat} className={'hp-filter-btn' + (activeCategory === cat ? ' active' : '')} onClick={() => setActiveCategory(cat)}>
-                      {cat === 'all' ? 'All' : cat}
-                    </button>
-                  ))}
+                <div className="hp-filters-wrap">
+                  <button className="hp-filters-arrow left" onClick={() => scrollFilters(-1)}>
+                    <i className="fas fa-chevron-left"></i>
+                  </button>
+                  <div className="hp-filters" ref={filtersRef}>
+                    {categories.map(cat => (
+                      <button key={cat} className={'hp-filter-btn' + (activeCategory === cat ? ' active' : '')} onClick={() => setActiveCategory(cat)}>
+                        {cat === 'all' ? 'All' : cat}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="hp-filters-fade-left"></div>
+                  <div className="hp-filters-fade-right"></div>
+                  <button className="hp-filters-arrow right" onClick={() => scrollFilters(1)}>
+                    <i className="fas fa-chevron-right"></i>
+                  </button>
                 </div>
 
                 {menuLoading ? (
