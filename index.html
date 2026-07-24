@@ -3595,7 +3595,10 @@
           html: '<div class="swal-form"><div class="swal-form-grid">' +
             '<div class="form-group"><label>Item ID</label><input type="text" id="swal-itemid" value="' + escapeHtml(itemData.item_id) + '" readonly style="background:#f0f0f0"></div>' +
             '<div class="form-group"><label>Name *</label><input type="text" id="swal-name" value="' + escapeHtml(itemData.name) + '"></div>' +
-            '<div class="form-group"><label>Category *</label><select id="swal-category"><option value="SNACK">Snack</option><option value="ROTI">Roti</option><option value="RICE">Rice</option><option value="CURRY">Curry</option><option value="DEVILLED">Devilled</option><option value="KOTTU">Kottu</option><option value="HOPPERS">Hoppers</option><option value="DESSERT">Dessert</option></select></div>' +
+            '<div class="form-group"><label>Category *</label><select id="swal-category">' +
+            ['SOFT DRINK','GIN & VODKA','SWALLOW','BREAKFAST','PROTEIN','CLASSIC PEPPER SOUP','RR KITCHEN NIGERIAN SOUP','SALAD','SHOTS','SIDES (EXTRAS)','KEBAB','MAIN COURSE','RR KITCHEN CHINESE DISH','RR KITCHEN CONTINENTAL DISH - STARTER','WHISKEY','WHITE WINE','SHOT BEVERAGES','MILKSHAKES','TEQUILA','RED WINE','ROSE WINE','NON-ALCOHOLIC DRINK','RR KITCHEN SANDWICH AND BURGER','RR CHICKEN COMBOS','PASTA','RICE DISHES','SPECIAL COCKTAILS','JUICES/SMOOTHIES','BEER','OTHERS','DESSERT','NIGERIAN RICE DISHES','PLATTER','RR GRILLED SECTION','LIGHT MEALS','CLASSIC COCKTAILS','COGNAC','CHAMPAGNE']
+            .map(c => '<option value="' + c + '">' + c.charAt(0) + c.slice(1).toLowerCase() + '</option>').join('') +
+            '</select></div>' +
             '<div class="form-group"><label>Price *</label><input type="number" id="swal-price" value="' + itemData.price + '" min="0" step="1"></div>' +
             '<div class="form-group"><label>Availability</label><select id="swal-avail"><option value="Instant">Instant</option><option value="Pre-Order">Pre-Order</option></select></div>' +
             '<div class="form-group"><label>Description</label><input type="text" id="swal-desc" value="' + escapeHtml(itemData.description) + '"></div>' +
